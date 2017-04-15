@@ -1,2 +1,2 @@
 # rancho
-A project with xls to learn go
+A project with xla to learn go
