@@ -4,15 +4,15 @@ package main_test
 
 import (
 	"bytes"
-    "encoding/json"
-    "log"
-    "net/http"
-    "net/http/httptest"
-    "os"
-    "strconv"
-    "testing"
+	"encoding/json"
+	"log"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"strconv"
+	"testing"
 
-    "."
+	"."
 )
 
 var a main.App
@@ -62,7 +62,6 @@ func checkResponseCode(t *testing.T, expected, actual int) {
 	}
 }
 
-
 func TestEmptyTable(t *testing.T) {
 	clearTable()
 
@@ -108,7 +107,7 @@ func TestCreateProduct(t *testing.T) {
 	if m["name"] != "test product" {
 		t.Errorf("Expected product name to be 'test product'. Got '%v'", m["name"])
 	}
-		
+
 	if m["price"] != 11.22 {
 		t.Errorf("Expected product to be '11.22'. Got '%v'", m["price"])
 	}
@@ -153,24 +152,24 @@ func TestUpdateProduct(t *testing.T) {
 	payload := []byte(`{"name":"test product - updated name","price":11.22}`)
 
 	req, _ = http.NewRequest("PUT", "/product/1", bytes.NewBuffer(payload))
-    response = executeRequest(req)
+	response = executeRequest(req)
 
-    checkResponseCode(t, http.StatusOK, response.Code)
+	checkResponseCode(t, http.StatusOK, response.Code)
 
-    var m map[string]interface{}
-    json.Unmarshal(response.Body.Bytes(), &m)
+	var m map[string]interface{}
+	json.Unmarshal(response.Body.Bytes(), &m)
 
-    if m["id"] != originalProduct["id"] {
-        t.Errorf("Expected the id to remain the same (%v). Got %v", originalProduct["id"], m["id"])
-    }
+	if m["id"] != originalProduct["id"] {
+		t.Errorf("Expected the id to remain the same (%v). Got %v", originalProduct["id"], m["id"])
+	}
 
-    if m["name"] == originalProduct["name"] {
-        t.Errorf("Expected the name to change from '%v' to '%v'. Got '%v'", originalProduct["name"], m["name"], m["name"])
-    }
+	if m["name"] == originalProduct["name"] {
+		t.Errorf("Expected the name to change from '%v' to '%v'. Got '%v'", originalProduct["name"], m["name"], m["name"])
+	}
 
-    if m["price"] == originalProduct["price"] {
-        t.Errorf("Expected the price to change from '%v' to '%v'. Got '%v'", originalProduct["price"], m["price"], m["price"])
-    }
+	if m["price"] == originalProduct["price"] {
+		t.Errorf("Expected the price to change from '%v' to '%v'. Got '%v'", originalProduct["price"], m["price"], m["price"])
+	}
 
 }
 
@@ -190,4 +189,3 @@ func TestDeleteProduct(t *testing.T) {
 	response = executeRequest(req)
 	checkResponseCode(t, http.StatusNotFound, response.Code)
 }
-
