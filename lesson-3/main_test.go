@@ -109,11 +109,11 @@ func TestCreateProduct(t *testing.T) {
 	}
 
 	if m["price"] != 11.22 {
-		t.Errorf("Expected product to be '11.22'. Got '%v'", m["price"])
+		t.Errorf("Expected product price to be '11.22'. Got '%v'", m["price"])
 	}
 
 	// the id is compared to 1.0 because JSON unmarshaling converts numbers to
-	// floats, when the target is map[string]interface{}
+	// floats, when the target is a map[string]interface{}
 	if m["id"] != 1.0 {
 		t.Errorf("Expected product ID to be '1'. Got '%v'", m["id"])
 	}
