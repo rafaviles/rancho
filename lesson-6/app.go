@@ -149,11 +149,12 @@ func (a *App) createDistributor(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	if err := d.createProduct(a.DB); err != nil {
+	if err := d.createDistributor(a.DB); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
+}
 
 func (a *App) getDistributors(w http.ResponseWriter, r *http.Request) {
 	count, _ := strconv.Atoi(r.FormValue("count"))
@@ -166,7 +167,7 @@ func (a *App) getDistributors(w http.ResponseWriter, r *http.Request) {
 		start = 0
 	}
 
-	products, err := getProducts(a.DB, start, count)
+	products, err := getDistributors(a.DB, start, count)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -174,8 +175,6 @@ func (a *App) getDistributors(w http.ResponseWriter, r *http.Request) {
 
 	respondWithJSON(w, http.StatusOK, products)
 }
-
-	
 
 //Convenience Functios
 

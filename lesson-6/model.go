@@ -63,7 +63,7 @@ func getProducts(db *sql.DB, start, count int) ([]product, error) {
 
 // Distributors
 func (d *distributor) createDistributor(db *sql.DB) error {
-	err := db.QueryRow("INSERT INTO distributor(id, name) VALUES($1, $2) RETURNING id", d.ID, d.Name).Scan(&d.ID)
+	err := db.QueryRow("INSERT INTO distributors(id, name) VALUES($1, $2) RETURNING id", d.ID, d.Name).Scan(&d.ID)
 
 	if err != nil {
 		return err
@@ -90,6 +90,6 @@ func getDistributors(db *sql.DB, start, count int) ([]distributor, error) {
 		distributors = append(distributors, d)
 	}
 
-	return products, nil
+	return distributors, nil
 
 }
